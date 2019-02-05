@@ -231,23 +231,10 @@
        <str name="facet.field">collection_sim</str>
        <str name="facet.field">unit_sim</str>
 
-       <str name="spellcheck">true</str>
-       <str name="spellcheck.dictionary">default</str>
-       <str name="spellcheck.dictionary">wordbreak</str>
-       <str name="spellcheck.onlyMorePopular">false</str>
-       <str name="spellcheck.extendedResults">true</str>
-       <str name="spellcheck.collate">true</str>
-       <str name="spellcheck.maxCollationTries">10</str>
-       <str name="spellcheck.count">5</str>
-       <str name="spellcheck.accuracy">0.7</str>
-
 	   <!-- configure for hit highlighting -->
 	   <str name="hl">true</str>
 	   <str name="hl.fl">content</str>
      </lst>
-    <arr name="last-components">
-      <str>spellcheck</str>
-    </arr>
   </requestHandler>
 
   <requestHandler name="permissions" class="solr.SearchHandler" >
@@ -304,31 +291,17 @@
 	</highlighting>
    </searchComponent>
 
-  <searchComponent name="spellcheck" class="solr.SpellCheckComponent">
-    <str name="queryAnalyzerFieldType">textSpell</str>
-    <!-- Multiple "Spell Checkers" can be declared and used by this component
-      (e.g. for title_spell field)
-      -->
-    <lst name="spellchecker">
-      <str name="name">default</str>
-      <str name="field">spell</str>
-      <str name="spellcheckIndexDir">./spell</str>
-      <str name="buildOnOptimize">true</str>
-      <str name="buildOnCommit">true</str>
+  <!-- replication master config
+  <requestHandler name="/replication" class="solr.ReplicationHandler">
+    <lst name="master">
+      <str name="replicateAfter">startup</str>
+      <str name="replicateAfter">commit</str>
+      <str name="confFiles"></str>
     </lst>
-
-    <!-- a spellchecker that can break or combine words.  See "/spell" handler below for usage -->
-	<lst name="spellchecker">
-		<str name="name">wordbreak</str>
-		<str name="classname">solr.WordBreakSolrSpellChecker</str>
-		<str name="field">spell</str>
-		<str name="combineWords">true</str>
-		<str name="breakWords">true</str>
-		<int name="maxChanges">10</int>
-	</lst>
-  </searchComponent>
-
-  <!-- replication slave config: -->
+  </requestHandler>
+  -->
+  <!-- replication slave config:
+  -->
   <requestHandler name="/replication" class="solr.ReplicationHandler">
     <lst name="slave">
       <str name="enable">true</str>
