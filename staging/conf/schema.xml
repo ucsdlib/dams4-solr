@@ -26,9 +26,13 @@
     <!-- explicit rdfxml field (could be large)-->
     <field name="rdfxml_ssi" type="text_en" stored="true" indexed="false" multiValued="false"/>
 
+    <!-- explicitly declare/override title_ssi, because we have custom sorting requirements -->
+    <field name="title_ssi" type="alphaStrippedSort" stored="true" indexed="true" multiValued="false"/>
+
+
 	<!--
 	These are hard coded in places in hydra-head, but we hope to fix that.
-	
+
 	<field name="inheritable_discover_access_person_t" type="string" stored="true" indexed="true" multiValued="true"/>
 	<field name="inheritable_read_access_person_t" type="string" stored="true" indexed="true" multiValued="true"/>
 	<field name="inheritable_edit_access_person_t" type="string" stored="true" indexed="true" multiValued="true"/>
@@ -394,7 +398,18 @@
         <filter class="solr.TrimFilterFactory"/>
       </analyzer>
     </fieldType>
-        
+
+    <!-- single token analyzed text, for sorting.  Punctuation is significant. -->
+    <fieldtype name="alphaStrippedSort" class="solr.TextField" sortMissingLast="true" omitNorms="true">
+      <analyzer>
+        <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="[;:\'&quot;\(\)]"/>
+        <tokenizer class="solr.KeywordTokenizerFactory" />
+        <filter class="solr.LowerCaseFilterFactory"/>
+        <filter class="solr.ICUFoldingFilterFactory"/>
+        <filter class="solr.TrimFilterFactory" />
+      </analyzer>
+    </fieldtype>
+
     <!-- single token analyzed text, for sorting.  Punctuation is significant. -->
     <fieldtype name="alphaSort" class="solr.TextField" sortMissingLast="true" omitNorms="true">
       <analyzer>
