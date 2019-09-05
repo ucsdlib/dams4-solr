@@ -303,7 +303,7 @@
   <requestHandler name="/replication" class="solr.ReplicationHandler">
     <lst name="slave">
       <str name="enable">true</str>
-      <str name="masterUrl">http://lib-hydratail-staging.ucsd.edu:8080/solr/${solr.core.name}</str>
+      <str name="masterUrl">http://lib-hydratail-prod.ucsd.edu:8983/solr/${solr.core.name}</str>
       <str name="pollInterval">00:00:60</str>
     </lst>
   </requestHandler>
